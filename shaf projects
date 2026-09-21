@@ -1,19 +1,810 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Website</title>
+  <title>Abdallah Al-Shafie | Portfolio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f7f5;
+      color: #171717;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    header {
+      max-width: 1050px;
+      margin: auto;
+      padding: 70px 25px 35px;
+    }
+
+    .name {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin-top: 15px;
+      color: #666;
+      font-size: 1.1rem;
+    }
+
+    /* NAVIGATION */
+
+    nav {
+      max-width: 1050px;
+      margin: auto;
+      padding: 0 25px;
+      border-bottom: 1px solid #d8d8d8;
+      display: flex;
+      gap: 35px;
+    }
+
+    .tab {
+      border: none;
+      background: none;
+      padding: 18px 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #888;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .tab:hover {
+      color: #111;
+    }
+
+    .tab.active {
+      color: #111;
+    }
+
+    .tab.active::after {
+      content: "";
+      position: absolute;
+      height: 2px;
+      background: #111;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+    }
+
+    /* CONTENT */
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 60px 25px 100px;
+    }
+
+    .section {
+      display: none;
+      animation: fade 0.3s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-header {
+      margin-bottom: 35px;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    .section-header p {
+      color: #777;
+    }
+
+    /* ACCORDION CARDS */
+
+    .card {
+      border-top: 1px solid #d5d5d5;
+    }
+
+    .card:last-child {
+      border-bottom: 1px solid #d5d5d5;
+    }
+
+    .card-button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 27px 5px;
+
+      text-align: left;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .card-button:hover .card-title {
+      opacity: 0.55;
+    }
+
+    .card-title {
+      transition: opacity 0.2s ease;
+    }
+
+    .plus {
+      font-size: 1.6rem;
+      font-weight: 300;
+      transition: transform 0.25s ease;
+    }
+
+    .card.open .plus {
+      transform: rotate(45deg);
+    }
+
+    .card-content {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition:
+        max-height 0.4s ease,
+        opacity 0.3s ease;
+    }
+
+    .card.open .card-content {
+      max-height: 1000px;
+      opacity: 1;
+    }
+
+    .card-inner {
+      padding: 0 5px 35px;
+      max-width: 750px;
+      color: #555;
+    }
+
+    .card-inner p {
+      margin-bottom: 18px;
+    }
+
+    .label {
+      display: block;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.72rem;
+      margin-top: 25px;
+      margin-bottom: 5px;
+    }
+
+    /* PROJECT TAGS */
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      border: 1px solid #ccc;
+      padding: 6px 11px;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      color: #555;
+    }
+
+    /* BUTTON */
+
+    .project-link {
+      display: inline-block;
+      margin-top: 20px;
+
+      padding: 10px 16px;
+      border: 1px solid #222;
+      border-radius: 5px;
+
+      color: #222;
+      text-decoration: none;
+      font-size: 0.85rem;
+
+      transition: all 0.2s ease;
+    }
+
+    .project-link:hover {
+      background: #222;
+      color: white;
+    }
+
+    /* PLACEHOLDER */
+
+    .placeholder {
+      color: #aaa;
+      font-style: italic;
+    }
+
+    /* FOOTER */
+
+    footer {
+      max-width: 1050px;
+      margin: auto;
+      padding: 30px 25px 50px;
+
+      border-top: 1px solid #ddd;
+
+      color: #888;
+      font-size: 0.8rem;
+
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      header {
+        padding-top: 45px;
+      }
+
+      .name {
+        letter-spacing: -2px;
+      }
+
+      nav {
+        gap: 22px;
+        overflow-x: auto;
+      }
+
+      .tab {
+        white-space: nowrap;
+      }
+
+      main {
+        padding-top: 40px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+  </style>
 </head>
+
 
 <body>
 
-    <h1>Welcome to my website!</h1>
+  <!-- =========================
+       HEADER
+       ========================= -->
 
-    <p>This is my first website hosted using GitHub.</p>
+  <header>
+
+    <h1 class="name">
+      Abdallah<br>
+      Al-Shafie
+    </h1>
+
+    <p class="subtitle">
+      Civil Engineering Student · University of Toronto
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       NAVIGATION
+       ========================= -->
+
+  <nav>
+
+    <button class="tab active" data-tab="background">
+      Background
+    </button>
+
+    <button class="tab" data-tab="projects">
+      Projects
+    </button>
+
+    <button class="tab" data-tab="experience">
+      Experience
+    </button>
+
+  </nav>
+
+
+  <!-- =========================
+       MAIN CONTENT
+       ========================= -->
+
+  <main>
+
+
+    <!-- =========================
+         BACKGROUND
+         ========================= -->
+
+    <section id="background" class="section active">
+
+      <div class="section-header">
+        <h2>Background</h2>
+        <p>A little bit about me.</p>
+      </div>
+
+
+      <!-- ABOUT ME -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">About Me</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Add a short introduction about yourself here.
+              You can talk about your interests in civil engineering,
+              what areas of the field interest you, and what you're
+              hoping to work on in the future.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EDUCATION -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Education</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <span class="label">University</span>
+
+            <p>
+              <strong>University of Toronto</strong><br>
+              Civil Engineering
+            </p>
+
+            <span class="label">Details</span>
+
+            <p class="placeholder">
+              Add graduation year, relevant coursework,
+              academic achievements, or other information here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SKILLS -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Skills</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Add your engineering, technical, software,
+              and professional skills here.
+            </p>
+
+            <div class="tags">
+
+              <span class="tag">Skill</span>
+              <span class="tag">Skill</span>
+              <span class="tag">Skill</span>
+              <span class="tag">Skill</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- INTERESTS -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Interests</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Add your engineering interests, professional interests,
+              hobbies, or other information here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         PROJECTS
+         ========================= -->
+
+    <section id="projects" class="section">
+
+      <div class="section-header">
+        <h2>Projects</h2>
+
+        <p>
+          Selected academic, engineering, and personal projects.
+        </p>
+      </div>
+
+
+      <!-- PROJECT 1 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Project Title</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <span class="label">Project</span>
+
+            <p class="placeholder">
+              Add a short description explaining what the project
+              was and what problem you were trying to solve.
+            </p>
+
+            <span class="label">My Role</span>
+
+            <p class="placeholder">
+              Explain what you personally worked on and contributed.
+            </p>
+
+            <span class="label">Tools & Skills</span>
+
+            <div class="tags">
+
+              <span class="tag">Tool</span>
+              <span class="tag">Skill</span>
+              <span class="tag">Software</span>
+
+            </div>
+
+            <a href="#" class="project-link">
+              View Project →
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PROJECT 2 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Project Title</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <span class="label">Project</span>
+
+            <p class="placeholder">
+              Project description will go here.
+            </p>
+
+            <span class="label">My Role</span>
+
+            <p class="placeholder">
+              Your contribution to the project will go here.
+            </p>
+
+            <span class="label">Tools & Skills</span>
+
+            <div class="tags">
+
+              <span class="tag">Tool</span>
+              <span class="tag">Skill</span>
+
+            </div>
+
+            <a href="#" class="project-link">
+              View Project →
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PROJECT 3 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Project Title</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Future project.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================
+         EXPERIENCE
+         ========================= -->
+
+    <section id="experience" class="section">
+
+      <div class="section-header">
+        <h2>Experience</h2>
+
+        <p>
+          Work, leadership, and professional experience.
+        </p>
+
+      </div>
+
+
+      <!-- EXPERIENCE 1 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Position / Organization</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <span class="label">Position</span>
+
+            <p class="placeholder">
+              Job title or role.
+            </p>
+
+            <span class="label">Organization</span>
+
+            <p class="placeholder">
+              Company or organization name.
+            </p>
+
+            <span class="label">Dates</span>
+
+            <p class="placeholder">
+              Month Year – Month Year
+            </p>
+
+            <span class="label">Experience</span>
+
+            <p class="placeholder">
+              Describe what you did, what responsibilities you had,
+              and what you accomplished.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EXPERIENCE 2 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Position / Organization</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Add another internship, job, volunteer position,
+              club, or leadership role here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- EXPERIENCE 3 -->
+
+      <div class="card">
+
+        <button class="card-button">
+          <span class="card-title">Position / Organization</span>
+          <span class="plus">+</span>
+        </button>
+
+        <div class="card-content">
+
+          <div class="card-inner">
+
+            <p class="placeholder">
+              Future experience.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+       ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Abdallah Al-Shafie
+    </span>
+
+    <span>
+      Civil Engineering · University of Toronto
+    </span>
+
+  </footer>
+
+
+  <!-- =========================
+       JAVASCRIPT
+       ========================= -->
+
+  <script>
+
+    // MAIN TABS
+
+    const tabs = document.querySelectorAll(".tab");
+    const sections = document.querySelectorAll(".section");
+
+    tabs.forEach(tab => {
+
+      tab.addEventListener("click", () => {
+
+        const target = tab.dataset.tab;
+
+        tabs.forEach(item => {
+          item.classList.remove("active");
+        });
+
+        sections.forEach(section => {
+          section.classList.remove("active");
+        });
+
+        tab.classList.add("active");
+
+        document
+          .getElementById(target)
+          .classList.add("active");
+
+      });
+
+    });
+
+
+    // EXPANDABLE CARDS
+
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+
+      const button = card.querySelector(".card-button");
+
+      button.addEventListener("click", () => {
+
+        card.classList.toggle("open");
+
+      });
+
+    });
+
+  </script>
 
 </body>
-
 </html>
